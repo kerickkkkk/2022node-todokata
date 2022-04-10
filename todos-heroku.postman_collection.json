@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "f9bd5ee0-bd32-4ed5-b79a-5b4ac6ca018e",
+		"name": "todos-heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有代辦",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增單筆 todos",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"第一筆todo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有代辦",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單一代辦",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos/2ee12b4b-023c-4b17-a07e-62595a85ae18",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"2ee12b4b-023c-4b17-a07e-62595a85ae18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改待辦",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"修改todo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/todos/0b35579e-8d53-4950-bd90-d3248395109d",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"0b35579e-8d53-4950-bd90-d3248395109d"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://quiet-peak-41705.herokuapp.com",
+			"type": "string"
+		}
+	]
+}
