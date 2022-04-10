@@ -98,4 +98,5 @@ const requestHandler = (req, res) => {
 
 
 const server = http.createServer(requestHandler)
+// 設定 process.env 
 server.listen( process.env.PORT || 8080 )
