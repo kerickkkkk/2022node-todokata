@@ -21,16 +21,20 @@ const requestHandler = (req, res) => {
     req.on('end', () => {
       try {
         const { title } = JSON.parse(body)
-        todos.push({
-          id : uuidv4() , 
-          title
-        })
-        res.writeHead(200, headers)
-        res.write(JSON.stringify({
-          "status" : "success",
-          "message" : todos
-        }))
-        res.end()
+        if(title){
+          todos.push({
+            id : uuidv4() , 
+            title
+          })
+          res.writeHead(200, headers)
+          res.write(JSON.stringify({
+            "status" : "success",
+            "message" : todos
+          }))
+          res.end()
+        }else{
+          errorHandler(res, headers, 'title 有誤')
+        }
       } catch (error) {
         errorHandler(res, headers)
       }
@@ -46,36 +50,43 @@ const requestHandler = (req, res) => {
     res.end()
   }else if( req.url.startsWith('/todos/') && req.method === 'DELETE' ){
     const id = req.url.split('/').pop()
-    const todoIndex = todos.findIndex( todo => todo.id === id)
-    todos.splice(todoIndex, 1)
-
-    res.writeHead(200, headers)
-    res.write(JSON.stringify({
-      "status" : "success",
-      "message" : `已刪除 ${todos[todoIndex].title} 待辦`
-    }))
-
-    res.end()
+    const checkIdExist = todos.find(todo => todo.id === id)
+    if(checkIdExist === true){
+      const todoIndex = todos.findIndex( todo => todo.id === id)
+      todos.splice(todoIndex, 1)
+      res.writeHead(200, headers)
+      res.write(JSON.stringify({
+        "status" : "success",
+        "message" : `已刪除 ${todos[todoIndex].title} 待辦`
+      }))
+      res.end()
+    } else{
+      errorHandler(res, headers, '請確認您輸入的id')
+    }
 
   }else if( req.url.startsWith('/todos/') && req.method === 'PATCH' ){
     req.on('end', ()=>{
       try {
           const {title} = JSON.parse(body)
-          const id = req.url.split('/').pop()
-          const todoIndex = todos.findIndex( todo => todo.id === id)
-          
-          if( id !== undefined && todoIndex > -1){
-            todos[todoIndex].title = title
-  
-            res.writeHead(200, headers)
-            res.write(JSON.stringify({
-              "status" : "success",
-              "message" : `已修改 ${ id } 待辦`
-            }))
-            res.end()
+          if(title){
+            const id = req.url.split('/').pop()
+            const todoIndex = todos.findIndex( todo => todo.id === id)
+            
+            if( id !== undefined && todoIndex > -1){
+              todos[todoIndex].title = title
+    
+              res.writeHead(200, headers)
+              res.write(JSON.stringify({
+                "status" : "success",
+                "message" : `已修改 ${ id } 待辦`
+              }))
+              res.end()
 
+            }else{
+              errorHandler(res, headers)
+            }
           }else{
-            errorHandler(res, headers)
+            errorHandler(res, headers, 'title 有誤')
           }
       
       } catch (error) {
